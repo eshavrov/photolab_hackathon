@@ -1,0 +1,20 @@
+{
+  "name": "photolab_hackathon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eshavrov/photolab_hackathon.git"
+  },
+  "keywords": [],
+  "author": "Evgeniy Shavrov <shavrov.ep@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eshavrov/photolab_hackathon/issues"
+  },
+  "homepage": "https://github.com/eshavrov/photolab_hackathon#readme"
+}
