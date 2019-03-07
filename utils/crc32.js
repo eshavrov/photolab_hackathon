@@ -12,7 +12,7 @@ const CRC_TABLE = Array.from({ length: 256 }, (_, c) => {
 
 const crc32 = buf => {
   const crc = buf.reduce((crc, byte) => CRC_TABLE[(crc ^ byte) & 0xff] ^ (crc >>> 8), -1) ^ -1;
-  const tmp = Buffer.alloc(4);
+  const tmp = Buffer.allocUnsafe(4);
   return tmp.writeInt32BE(crc, 0), tmp;
 };
 
