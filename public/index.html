@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Hackathon</title>
+  </head>
+  <body>
+    <canvas id="screen-back"></canvas>
+    <div class="layout">
+      <div class="perspective">
+        <div id="screen">
+          <div id="content">
+            <pre>
+       8888888888  888    88888       
+       88     88   88 88   88  88      
+        8888  88  88   88  88888       
+          88  88 888888888 88   88     
+    8888888   88 88     88 88    888888
+    
+    88  88  88   888    88888    888888
+    88  88  88  88 88   88  88  88     
+    88 8888 88 88   88  88888    8888  
+     888  888 888888888 88   88     88 
+      88  88  88     88 88    8888888  
+      
+      привет!
+</pre
+            >
+            <pre class="left">
+  +----------------------+
+  |  тут тект сообщения  |
+  |  бла-бла-бла!..      |
+--+----------------------+
+</pre
+            >
+            <pre class="right">
++----------------------+  
+|  тут тект сообщения  |  
+|  бла-бла-бла!..      |  
++----------------------+--
+</pre
+            >
+            <div class="img"><img src="./new_sticker.png" alt="" width="200" /></div>
+          </div>
+        </div>
+      </div>
+      <div class="text-field">
+        <input type="text" onchange="onChange(this)" />
+      </div>
+    </div>
+    <script src="./main.js"></script>
+  </body>
+</html>

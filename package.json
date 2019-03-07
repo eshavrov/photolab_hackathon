@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "serve ./public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eshavrov/photolab_hackathon.git"
@@ -17,6 +19,7 @@
   "homepage": "https://github.com/eshavrov/photolab_hackathon#readme",
   "dependencies": {
     "request": "^2.88.0",
-    "request-promise": "^4.2.4"
+    "request-promise": "^4.2.4",
+    "serve": "^10.1.2"
   }
 }
