@@ -19,7 +19,8 @@ const starWars = `
  888  888 888888888 88   88     88 
   88  88  88     88 88    8888888  
 	
-	привет!
+  Добро пожаловать в общий чат
+     Империи и постанцев!
 `;
 function start() {
   canvas.width = window.innerWidth;
@@ -74,14 +75,35 @@ function onChange(e) {
   const time = `${now.getHours()}:${m < 10 ? '0' + m : m}`;
   if (!text) return;
   e.value = '';
-  content.innerHTML += `<pre class="right">${generate(text, 30, 'right', time)}</pre>`;
+  content.innerHTML += `<pre class="right">${generate(text, 50, 'right', time)}</pre>`;
   const el = document.getElementById('screen');
   el.scrollTop = Math.ceil(el.scrollHeight - el.clientHeight);
 }
 
-function generate(text, width, type, time = '') {
-  return `+${'-'.repeat(text.length + 2)}+  
-| ${text} |  
-|${' '.repeat(text.length + 2)}|  
-+${'-'.repeat(text.length + 1 - time.length)}${time}-+--`;
+function generateLines(text, max) {
+  const words = text.split(' ');
+  const lines = [''];
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+    if (lines[lines.length - 1].length + 1 + word.length < max) {
+      lines[lines.length - 1] += ' ' + word;
+    } else {
+      lines.push(word);
+    }
+  }
+  const textWidth = Math.max(...lines.map(line => line.length), 15);
+
+  return lines.map(line => `${line}${' '.repeat(textWidth - line.length)}`);
+}
+
+function generate(text, width = 50, type, time = '') {
+  const lines = generateLines(text, width);
+  const textWidth = Math.max(...lines.map(line => line.length), 15);
+  return `+${'-'.repeat(textWidth + 2)}+  
+ ${lines.reduce(
+   (acc, line) => `${acc}| ${line} |  
+ `,
+   ''
+ )}|${' '.repeat(textWidth + 2)}|  
++${'-'.repeat(textWidth + 1 - time.length)}${time}-+--`;
 }

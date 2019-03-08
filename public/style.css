@@ -15,7 +15,7 @@ body {
 
 .layout {
   width: 100%;
-	height: 100%;  
+  height: 100%;
 }
 
 .perspective {
@@ -33,17 +33,22 @@ body {
 #screen {
   width: 100%;
   box-sizing: border-box;
-  max-height: calc(100vh - 150px);
+  max-height: calc(100vh - 100px);
   font-family: monospace;
   /* transform: rotateX(10deg); */
   transition: transform 2000ms;
   margin: 0 auto;
   width: 100%;
-  max-width: 800px;
+  max-width: 760px;
   overflow-y: scroll;
   overflow-x: hidden;
   padding: 20px;
   margin-top: 16px;
+}
+.joined {
+  color: yellowgreen;
+  text-align: center;
+  margin: 16px;
 }
 
 pre {
