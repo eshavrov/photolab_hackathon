@@ -35,8 +35,10 @@ body {
   box-sizing: border-box;
   max-height: calc(100vh - 100px);
   font-family: monospace;
-  /* transform: rotateX(10deg); */
-  transition: transform 2000ms;
+  /* transform: rotateX(12deg); */
+  /* transition: transform 2000ms; */
+  transition: background-color 800ms;
+
   margin: 0 auto;
   width: 100%;
   max-width: 760px;
@@ -44,7 +46,26 @@ body {
   overflow-x: hidden;
   padding: 20px;
   margin-top: 16px;
+  background-color: rgba(0, 0, 0, 0.76);
+  border-left: 2px solid lime;
 }
+
+/* @media only screen and (max-width: 900px) {
+  #screen {
+    transform: rotateX(10deg);
+  }
+}
+@media only screen and (max-width: 800px) {
+  #screen {
+    transform: rotateX(5deg);
+  }
+}
+@media only screen and (max-width: 600px) {
+  #screen {
+    transform: rotateX(0deg);
+  }
+} */
+
 .joined {
   color: yellowgreen;
   text-align: center;
@@ -67,9 +88,9 @@ pre.right {
   color: yellow;
 }
 
-.perspective #screen:hover {
+/* .perspective #screen:hover {
   transform: rotateX(0deg);
-}
+} */
 
 div.img {
   text-align: right;
@@ -91,7 +112,7 @@ input {
   font-family: monospace;
   font-size: 24px;
   color: yellow;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0);
   border: none;
   border-bottom: 2px solid lime;
   outline: none;
