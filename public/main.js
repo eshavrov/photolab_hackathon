@@ -62,8 +62,11 @@ function move(o, vx, vy, index) {
 
 setInterval(() => {
   users.forEach((user, i) => {
-    user.nextTarget.x = Math.abs(user.nextTarget.x + Math.random() * 400 - 200);
-    user.nextTarget.y = Math.abs(user.nextTarget.y + Math.random() * 400 - 200);
+    const rx = Math.random() < 8 ? 200 : 600 * Math.random();
+    const ry = Math.random() < 8 ? 200 : 600 * Math.random();
+
+    user.nextTarget.x = Math.abs(user.nextTarget.x + Math.random() * 2 * rx - rx);
+    user.nextTarget.y = Math.abs(user.nextTarget.y + Math.random() * 2 * ry - ry);
     if (user.nextTarget.x > canvas.width) user.nextTarget.x = 2 * canvas.width - user.nextTarget.x;
     if (user.nextTarget.y > canvas.height) user.nextTarget.y = 2 * canvas.height - user.nextTarget.y;
   });
@@ -162,6 +165,8 @@ function generate(text, width = 50, type, time = '') {
 function createUser(name, spaceship, speed) {
   const x = Math.random() * canvas.width,
     y = Math.random() * canvas.height;
+  const sound = new Audio(spaceship.sound);
+  sound.volume = 0.1;
   return {
     name,
     spaceship,
@@ -170,6 +175,7 @@ function createUser(name, spaceship, speed) {
     speed,
     target: new Vector(x, y),
     nextTarget: new Vector(x, y),
+    sound,
   };
 }
 
@@ -182,7 +188,8 @@ const users = [
   createUser('Anya', ship_types.TIEFighter, Math.random() + 0.1),
   createUser('Darth Vade', ship_types.TIEFighter, Math.random() + 0.1),
   createUser('Luke Skywalker', ship_types.Fighter, Math.random() + 0.1),
-  ...Array.from({ length: 30 }, (_, i) => createUser(`Bot ${i}`, ship_types.TIEFighter, Math.random() + 0.1)),
+  ...Array.from({ length: 3 }, (_, i) => createUser(`Bot ${i}`, ship_types.TIEFighter, Math.random() + 0.1)),
+  ...Array.from({ length: 3 }, (_, i) => createUser(`Bot ${i}`, ship_types.XFighter, Math.random() + 0.1)),
 ];
 
 const fires = [];
@@ -214,7 +221,8 @@ function shipFire(ship) {
     const { x, y } = enemy;
     const vx = (2.5 * (x - ship.x)) / max;
     const vy = (2.5 * (y - ship.y)) / max;
-    fires.push(createFire(ship.x + 20 + vx * 10, ship.y + 20 + vy * 10, vx, vy, ship.spaceship.f));
+    fires.push(createFire(ship.x + vx * 10, ship.y + vy * 10, vx, vy, ship.spaceship.f));
+    ship.sound.play();
   }
 }
 

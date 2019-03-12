@@ -7,9 +7,8 @@ const CHUNK_NAMES = {
   OPTIONS: 'OPTS',
 };
 
-const encode = (data, key) => data;
-
-const decode = (data, key) => data;
+const encode = (data, key = 'default') => data;
+const decode = (data, key = 'default') => data;
 
 // https://www.w3.org/TR/PNG/#5Chunk-layout
 const createChunk = (name, data, key = 'default') => {

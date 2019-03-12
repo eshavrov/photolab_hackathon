@@ -34,8 +34,8 @@ fs.readFile('./stickers/sticker_vk_starwars_002.png', (err, data) => {
       filename: 'sticker2.png',
       format: 'png',
     },
-    text: 'test text',
+    text: 'hello world anya daniil vova I',
   });
 });
 
-// decodePNGFile('./sticker_pic2.png');
+// decodePNGFile('./new_2.png');
