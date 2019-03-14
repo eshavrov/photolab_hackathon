@@ -24,7 +24,8 @@ class Room {
   addMessage(msg) {
     const data = {
       image: null,
-      text: msg.data.text,
+      text: (msg.data && msg.data.text) || null,
+      src: msg.src || null,
       date: Date.now(),
       name: msg.name,
     };

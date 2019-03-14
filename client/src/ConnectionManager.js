@@ -1,4 +1,5 @@
 import Events from './events';
+import { fromByteArray } from './base64';
 
 export default class ConnectionManager {
   constructor() {
@@ -10,7 +11,7 @@ export default class ConnectionManager {
     this.conn = new WebSocket(address);
 
     this.conn.addEventListener('open', () => {
-      console.log('Connection established');
+      console.log('Connection');
       this.initRoom();
     });
 
@@ -42,13 +43,14 @@ export default class ConnectionManager {
       case 'set-user':
         this.events.emit('set-user', data);
         break;
+
       default:
     }
   }
 
   send(data) {
     const msg = JSON.stringify(data);
-    console.log('Sending message', msg);
+    // console.log('Sending message', msg);
     this.conn.send(msg);
   }
 
@@ -65,6 +67,21 @@ export default class ConnectionManager {
     this.send({
       type: 'message',
       id: roomId,
+      data,
+    });
+  }
+
+  sendImage({ rawData, filename, size, contentType }) {
+    const roomId = window.location.hash.split('#')[1] || 'all';
+
+    const view = new Uint8Array(rawData);
+    const data = fromByteArray(view);
+    this.send({
+      type: 'image',
+      id: roomId,
+      filename,
+      contentType,
+      size,
       data,
     });
   }
