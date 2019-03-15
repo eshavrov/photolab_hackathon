@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import InputForm from './components/InputForm';
 import MessageList from './components/MessageList';
+import { fighters, ship_types } from './game/fighters';
+import { data } from './data';
 
 const IMAGE_STATUS = {
   NULL: Symbol('NULL'),
@@ -17,22 +19,31 @@ class App extends Component {
     formData: null,
     clientId: null,
     name: null,
-    fraction: 0,
+    fraction: null,
+    shipType: null,
     messages: [],
     clients: [],
   };
 
   _updateRoom = ({ messages, clientId, clients }) => {
+    console.log('>>>>>_updateRoom>>>>>>>', messages, clientId, clients);
+
     this.setState({
       clientId,
       clients,
       messages: [...messages],
     });
+
+    clients.forEach(({ name, fraction, id }) => {
+      if (name) fighters.add(id, { name, spaceship: ship_types.TIEFighter });
+    });
   };
 
   _setUser = ({ name, fraction, id }) => {
     const { clientId } = this.state;
-    //console.log(this.state.clients, id, name);
+    console.log('>>>>>_setUser>>>>>>>', name, fraction, id);
+    fighters.add(id, { name, spaceship: ship_types.Fighter });
+
     if (clientId !== id) {
       this.setState(state => ({
         clients: state.clients.map(client => (client.id !== id ? client : { ...client, name })),
@@ -40,7 +51,6 @@ class App extends Component {
     } else {
       this.setState(state => ({
         clients: state.clients.map(client => (client.id !== id ? client : { ...client, name })),
-
         name,
         fraction,
       }));
@@ -51,6 +61,10 @@ class App extends Component {
     this.setState(state => ({
       messages: [...state.messages, msg],
     }));
+    console.log(msg);
+    if (msg.my) {
+      this.list.scrollTop = Math.ceil(this.list.scrollHeight - this.list.clientHeight);
+    }
   };
 
   _onChangeName = username => {
@@ -62,6 +76,7 @@ class App extends Component {
     const { connectionManager } = this.props;
     connectionManager.sendMessage({ text });
   };
+
   _onChangeImage = e => {
     this.setState({ status: IMAGE_STATUS.WAITING });
 
@@ -103,24 +118,63 @@ class App extends Component {
   }
 
   render() {
-    const { messages, name, clients, status } = this.state;
+    const { messages, name, fraction, shipType, clients, status } = this.state;
+    // return (
+    //   <div className="layout">
+    //     {/* <div className="text-field"> */}
+    //     {!name && fraction === null && !shipType && (
+    //       <InputForm label="Твое имя, кадет?" onChange={this._onChangeName} />
+    //     )}
+    //     {name && fraction === null && !shipType && (
+    //       <InputForm label="Выбери свою сторону!" onChange={this._onChangeName} />
+    //     )}
 
+    //     {/* </div> */}
+    //   </div>
+    // );
     return (
-      <div className="App">
-        <div>
-          {clients.length}:{clients.reduce((acc, client) => `${acc}, ${client.name || 'Unknown person'}`, '')}
-        </div>
-        <div>{name ? name : 'Представьтесь'}</div>
-        {!name && <InputForm label="Никнейм" onChange={this._onChangeName} />}
-        {name && (
-          <>
-            <InputForm label="Напиши сообщение" onChange={this._onChange} />
-            <input type="file" id="single" onChange={this._onChangeImage} />
-            {status === IMAGE_STATUS.SELECTED && <button onClick={this._onChangeSend}>+</button>}
-          </>
-        )}
+      <div className="layout">
+        <div className="perspective">
+          {/* <div>
+            {clients.length}:{clients.reduce((acc, client) => `${acc}, ${client.name || 'Unknown person'}`, '')}
+          </div> */}
+          <div
+            className="message-list"
+            ref={node => {
+              this.list = node;
+            }}
+          >
+            <pre>
+              {`
+   8888888888  888    88888       
+   88     88   88 88   88  88      
+    8888  88  88   88  88888       
+      88  88 888888888 88   88     
+8888888   88 88     88 88    888888
 
-        <MessageList messages={messages} />
+88  88  88   888    88888    888888
+88  88  88  88 88   88  88  88     
+88 8888 88 88   88  88888    8888  
+ 888  888 888888888 88   88     88 
+  88  88  88     88 88    8888888  
+  
+   Добро пожаловать в общий чат    
+      Империи и повстанцев!        `}
+            </pre>
+            <MessageList messages={messages} />
+          </div>
+        </div>
+        <div className="text-field">
+          <div>{name ? name : 'Представьтесь'}</div>
+          {!name && <InputForm label="Твое имя, кадет?" onChange={this._onChangeName} />}
+          {name && (
+            <>
+              <InputForm label="" onChange={this._onChange} />
+              {/* <input type="file" id="single" onChange={this._onChangeImage} />
+              {status === IMAGE_STATUS.SELECTED && <button onClick={this._onChangeSend}>+</button>} */}
+            </>
+          )}
+        </div>
       </div>
     );
   }

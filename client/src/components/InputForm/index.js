@@ -15,8 +15,9 @@ class InputForm extends Component {
     const { label } = this.props;
     return (
       <form onSubmit={this._onSubmit}>
-        <label>
-          {label} <input type="text" id="input" />
+        <label className="input">
+          <div className="label">{label} </div>
+          <input type="text" id="input" autoComplete="off" />
         </label>
       </form>
     );

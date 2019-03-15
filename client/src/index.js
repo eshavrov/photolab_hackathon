@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import ConnectionManager from './ConnectionManager';
+import './game';
 
 const host = window.location.hostname;
 const uri = `ws://${host}:8081`;

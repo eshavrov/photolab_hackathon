@@ -1,13 +1,12 @@
 import React, { Component, Fragment } from 'react';
+import Reply from './Reply';
 
 class MessageList extends Component {
   render() {
     const { messages = [] } = this.props;
     return (
-      <div style={{ width: '600px', padding: '10px', margin: '10px', background: '#aaa' }}>
+      <>
         {messages.map((message, i) => {
-          const date = new Date(message.date);
-
           return (
             <Fragment key={i}>
               {message.src && (
@@ -22,24 +21,25 @@ class MessageList extends Component {
                 </div>
               )}
               {message.text && (
-                <div
-                  style={{
-                    width: '400px',
-                    padding: '10px',
-                    margin: '10px',
-                    background: message.my ? 'yellow' : '#eee',
-                    marginLeft: message.my ? '180px' : '0',
-                  }}
-                >
-                  <div>{message.text}</div>
-                  <div style={{ marginTop: '20px' }}>{message.name || 'Unknown person'}</div>
-                  <div>{`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`}</div>
-                </div>
+                <Reply text={message.text} author={message.name} timestamp={message.date} my={message.my} />
+                // <div
+                //   style={{
+                //     width: '400px',
+                //     padding: '10px',
+                //     margin: '10px',
+                //     background: message.my ? 'yellow' : '#eee',
+                //     marginLeft: message.my ? '180px' : '0',
+                //   }}
+                // >
+                //   <div>{message.text}</div>
+                //   <div style={{ marginTop: '20px' }}>{message.name || 'Unknown person'}</div>
+                //   <div>{`${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`}</div>
+                // </div>
               )}
             </Fragment>
           );
         })}
-      </div>
+      </>
     );
   }
 }
