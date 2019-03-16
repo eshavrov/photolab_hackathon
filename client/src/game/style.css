@@ -106,10 +106,26 @@ div.img {
   width: 100%;
   bottom: 0;
 }
+.window {
+  box-sizing: border-box;
 
-.input {
   display: block;
-  margin: 0 auto 32px;
+  margin: 15% auto 32px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  border: 2px solid lime;
+  padding: 20px;
+  position: relative;
+}
+.window img {
+  margin: -15px 20px -15px -15px;
+}
+.input {
+  box-sizing: border-box;
+
+  display: block;
+  margin: 0 auto 16px;
   width: 100%;
   max-width: 400px;
 }
@@ -117,8 +133,10 @@ div.img {
   color: yellow;
   display: block;
   width: 100%;
+  padding: 10px 0 30px;
 }
 input {
+  box-sizing: border-box;
   display: block;
   width: 100%;
   padding: 20px 20px 0;
@@ -129,6 +147,35 @@ input {
   border: none;
   border-bottom: 2px solid lime;
   outline: none;
+}
+
+/***/
+input[type='radio'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+input[type='radio'] + div {
+  position: relative;
+  padding: 16px;
+  text-align: center;
+  color: #aaa;
+  border: 2px solid #444;
+}
+
+input[type='radio'] + div:hover {
+  color: rgb(49, 180, 49);
+  border: 2px solid rgb(49, 180, 49);
+}
+
+input[type='radio']:checked + div {
+  color: lime;
+  border: 2px solid lime;
 }
 
 ::-webkit-scrollbar-track {
