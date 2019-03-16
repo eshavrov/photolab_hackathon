@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import InputForm from './components/InputForm';
+import RadioGroup from './components/RadioGroup';
 import MessageList from './components/MessageList';
 import { fighters, ship_types } from './game/fighters';
 import { data } from './data';
@@ -20,7 +21,7 @@ class App extends Component {
     clientId: null,
     name: null,
     fraction: null,
-    shipType: null,
+    fighter: null,
     messages: [],
     clients: [],
   };
@@ -67,7 +68,7 @@ class App extends Component {
     }
   };
 
-  _onChangeName = username => {
+  _onChangeUserName = username => {
     const { connectionManager } = this.props;
     connectionManager.setUserName(username);
   };
@@ -117,21 +118,60 @@ class App extends Component {
     connectionManager.events.listen('set-user', this._setUser);
   }
 
-  render() {
-    const { messages, name, fraction, shipType, clients, status } = this.state;
-    // return (
-    //   <div className="layout">
-    //     {/* <div className="text-field"> */}
-    //     {!name && fraction === null && !shipType && (
-    //       <InputForm label="Твое имя, кадет?" onChange={this._onChangeName} />
-    //     )}
-    //     {name && fraction === null && !shipType && (
-    //       <InputForm label="Выбери свою сторону!" onChange={this._onChangeName} />
-    //     )}
+  _onChangeName = name => {
+    this.setState({ name });
+  };
 
-    //     {/* </div> */}
-    //   </div>
-    // );
+  _onChangeFraction = (name, value) => {
+    this.setState({ [name]: parseInt(value, 10) });
+  };
+
+  _onChangeFighter = (_, value) => {
+    this.setState({ [_]: parseInt(value, 10) });
+    const { connectionManager } = this.props;
+    const { name } = this.state;
+    connectionManager.setUserName(name);
+  };
+
+  render() {
+    const { messages, name, fraction, fighter, clients, status } = this.state;
+    return (
+      <div className="layout">
+        {/* <div className="text-field"> */}
+        <div className="window">
+          {!name && fraction === null && !fighter && (
+            <InputForm label="Твое имя, кадет?" onChange={this._onChangeName} />
+          )}
+          {name && fraction === null && !fighter && (
+            <RadioGroup
+              label="Выбери свою сторону!"
+              onChange={this._onChangeFraction}
+              name="fraction"
+              // [{ label: 'ГАЛАКТИЧЕСКАЯ ИМПЕРИЯ', value: 0 }, { label: 'АЛЬЯНС ПОВСТАНЦЕВ', value: 1 }]
+              values={data.map(({ title }, index) => ({ label: title, value: index }))}
+            />
+          )}
+          {name && fraction !== null && !fighter && (
+            <RadioGroup
+              label="Выбери корабль!"
+              onChange={this._onChangeFighter}
+              name="fighter"
+              values={data[fraction].fighters.map(({ name, img }, index) => ({
+                label: (
+                  <>
+                    <img src={`./img/${img}`} height={80} />
+                    <span>{name}</span>
+                  </>
+                ),
+                value: index,
+              }))}
+            />
+          )}
+        </div>
+
+        {/* </div> */}
+      </div>
+    );
     return (
       <div className="layout">
         <div className="perspective">
